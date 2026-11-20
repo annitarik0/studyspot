@@ -2,6 +2,8 @@
 
 Landing page for **StudySpot**, the iPhone app that finds the quietest places to study in Paris: live free seats, live noise level in decibels, booking in three steps and a Focus timer.
 
+**Live:** https://annitarik0.github.io/studyspot/ · **App code:** https://github.com/annitarik0/studyspot-app
+
 ## What's on the page
 
 - A WebGL "noise field" hero (Three.js): the city as a sound equaliser that goes quiet and green where you point.
