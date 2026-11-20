@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>StudySpot</title>
+  <meta name="claude:viewport-fit-sides" content="cover" />
+  <meta name="description" content="StudySpot trouve les espaces de travail les plus calmes de Paris en temps réel : places libres, niveau sonore en direct, réservation en trois gestes." />
+  <meta name="theme-color" content="#F5F5F3" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Loader: the city noise calms down, like the app splash -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="logo-mark" viewBox="0 0 100 100" width="64" height="64"><rect width="100" height="100" rx="28" fill="#0A0A0A"/><path d="M50 24 L78 48 Q80 50 77 52 L72 52 L72 74 Q72 77 69 77 L58 77 L58 61 L42 61 L42 77 L31 77 Q28 77 28 74 L28 52 L23 52 Q20 50 22 48 Z" fill="#fff"/></svg>
+      <div class="loader-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="nav" id="nav">
+    <a href="#top" class="brand" aria-label="StudySpot, accueil">
+      <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect width="100" height="100" rx="28" fill="currentColor"/><path d="M50 24 L78 48 Q80 50 77 52 L72 52 L72 74 Q72 77 69 77 L58 77 L58 61 L42 61 L42 77 L31 77 Q28 77 28 74 L28 52 L23 52 Q20 50 22 48 Z" fill="var(--bg)"/></svg>
+      <span>StudySpot</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Navigation principale">
+      <a href="#how">Comment ça marche</a>
+      <a href="#silence">Silence en direct</a>
+      <a href="#spots">Lieux</a>
+      <a href="#focus">Mode Focus</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#download" class="btn btn-dark btn-sm magnetic nav-cta">Obtenir l'app</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <canvas id="field" aria-hidden="true"></canvas>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <div class="pill reveal"><span class="dot-live"></span> <span id="heroLive">143</span> places libres à Paris, en ce moment</div>
+          <h1 class="hero-title">
+            <span class="line"><span>Trouve ton</span></span>
+            <span class="line"><span><em>silence.</em></span></span>
+          </h1>
+          <p class="hero-sub reveal">Bibliothèques, cafés, coworkings : StudySpot te montre en direct les places libres et le niveau sonore de chaque lieu. Réserve en trois gestes, concentre‑toi pour de vrai.</p>
+          <div class="hero-ctas reveal">
+            <a href="#download" class="btn btn-dark magnetic">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.17-1.53 2.66-.39 6.6 1.1 8.75.73 1.05 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.4 1.2-2.47-.03-.01-2.3-.88-2.3-3.5ZM14.2 6.13c.6-.73 1-1.74.9-2.75-.86.04-1.9.58-2.52 1.3-.55.64-1.04 1.67-.91 2.66.96.07 1.94-.49 2.53-1.21Z"/></svg>
+              Bientôt sur l'App Store
+            </a>
+            <a href="#how" class="btn btn-ghost magnetic">Voir comment ça marche <span aria-hidden="true">↓</span></a>
+          </div>
+          <p class="hero-hint reveal" aria-hidden="true"><span class="hint-cursor"></span> Passe la souris sur la ville : là où tu pointes, le bruit s'éteint.</p>
+        </div>
+
+        <div class="hero-phone" id="heroPhone">
+          <div class="phone-stage">
+            <div class="phone" id="phone3d">
+              <div class="phone-side"></div>
+              <div class="phone-body">
+                <div class="phone-screen" data-screen="home"></div>
+                <div class="phone-island"></div>
+                <div class="phone-glare"></div>
+              </div>
+              <div class="float-chip chip-a"><span class="dot-live"></span> <b id="chipSeats">12</b>&nbsp;places libres</div>
+              <div class="float-chip chip-b"><span class="mini-bars"><i></i><i></i><i></i><i></i><i></i></span> <b id="chipDb">28</b>&nbsp;dB</div>
+              <div class="float-chip chip-c"><span class="chip-check">✓</span> Réservé · 14:00</div>
+            </div>
+            <div class="phone-shadow"></div>
+          </div>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#ticker" aria-label="Défiler vers le bas"><span></span></a>
+    </section>
+
+    <!-- LIVE TICKER -->
+    <div class="ticker" id="ticker" aria-label="Disponibilités en direct">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+
+    <!-- MANIFESTO -->
+    <section class="manifesto container">
+      <p class="manifesto-text" id="manifesto">Paris fait en moyenne 65 décibels. Ta concentration en demande moins de 35. StudySpot trouve l'écart, en temps réel, à quelques minutes de toi.</p>
+    </section>
+
+    <!-- HOW IT WORKS: sticky phone story -->
+    <section class="how container" id="how">
+      <header class="section-head">
+        <span class="overline">Comment ça marche</span>
+        <h2>Du bruit au calme<br/>en <em>trois gestes.</em></h2>
+      </header>
+      <div class="story">
+        <div class="story-phone" aria-hidden="true">
+          <div class="phone phone-flat">
+            <div class="phone-side"></div>
+            <div class="phone-body">
+              <div class="phone-screen story-screen is-active" data-screen="explore" data-step="0"></div>
+              <div class="phone-screen story-screen" data-screen="book" data-step="1"></div>
+              <div class="phone-screen story-screen" data-screen="pass" data-step="2"></div>
+              <div class="phone-island"></div>
+            </div>
+          </div>
+          <div class="story-dots"><i class="is-active"></i><i></i><i></i></div>
+        </div>
+        <ol class="story-steps">
+          <li class="step is-active" data-step="0">
+            <span class="step-num">01</span>
+            <h3>Explore le calme autour de toi</h3>
+            <p>Liste ou carte, filtre par ambiance : <b>Silencieux</b>, <b>Calme</b> ou <b>Ambiance café</b>. Chaque lieu affiche ses places libres et ses décibels, mis à jour en continu.</p>
+            <div class="step-mini" data-screen="explore"></div>
+          </li>
+          <li class="step" data-step="1">
+            <span class="step-num">02</span>
+            <h3>Réserve ton créneau</h3>
+            <p>Choisis le jour, l'heure et la durée. Créneau complet ? StudySpot te propose aussitôt les <b class="green">disponibilités les plus proches</b>, sans que tu aies à chercher.</p>
+            <div class="step-mini" data-screen="book"></div>
+          </li>
+          <li class="step" data-step="2">
+            <span class="step-num">03</span>
+            <h3>Entre avec ton pass</h3>
+            <p>Paiement en un geste (ou gratuit pour les bibliothèques), puis un pass QR qui t'attend dans l'app. Tu scannes, tu t'assois, tu travailles.</p>
+            <div class="step-mini" data-screen="pass"></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SILENCE SLIDER -->
+    <section class="silence" id="silence">
+      <div class="container">
+        <header class="section-head">
+          <span class="overline">Silence en direct</span>
+          <h2>Règle le volume<br/>de <em>ta ville.</em></h2>
+          <p class="lead">Fais glisser le curseur : seuls les lieux sous ce niveau sonore restent allumés.</p>
+        </header>
+
+        <div class="meter">
+          <div class="meter-top">
+            <div class="meter-value"><span id="dbVal">35</span><small>dB</small></div>
+            <div class="meter-label">
+              <b id="dbLabel">Murmure</b>
+              <span id="dbCount">7 lieux à ce niveau ou en dessous</span>
+            </div>
+            <div class="meter-bars" id="meterBars" aria-hidden="true"></div>
+          </div>
+          <input type="range" id="dbRange" min="24" max="55" value="35" step="1" aria-label="Niveau sonore maximum en décibels" />
+          <div class="meter-scale" aria-hidden="true"><span>24 dB · capsule</span><span>35 dB · bibliothèque</span><span>55 dB · café animé</span></div>
+        </div>
+
+        <div class="spot-grid" id="spotGrid"></div>
+      </div>
+    </section>
+
+    <!-- COVERFLOW -->
+    <section class="spots" id="spots">
+      <div class="container spots-head">
+        <header class="section-head">
+          <span class="overline">Les lieux</span>
+          <h2>Des endroits qu'on<br/><em>aime vraiment.</em></h2>
+        </header>
+        <div class="flow-nav">
+          <button class="round-btn" id="flowPrev" aria-label="Lieu précédent">←</button>
+          <button class="round-btn" id="flowNext" aria-label="Lieu suivant">→</button>
+        </div>
+      </div>
+      <div class="flow" id="flow" tabindex="0" aria-label="Galerie de lieux, faites défiler horizontalement"></div>
+    </section>
+
+    <!-- BENTO FEATURES -->
+    <section class="features container" id="features">
+      <header class="section-head">
+        <span class="overline">Tout est pensé</span>
+        <h2>Les petits détails<br/>qui font <em>la différence.</em></h2>
+      </header>
+      <div class="bento">
+        <article class="tile tile-map tilt">
+          <div class="tile-copy"><h3>Carte en direct</h3><p>Les places libres bougent sous tes yeux. Touche un lieu, la caméra s'incline vers lui.</p></div>
+          <div class="mini-map" id="miniMap"></div>
+        </article>
+        <article class="tile tile-card tilt" id="payTile">
+          <div class="tile-copy"><h3>Paiement en un geste</h3><p>Carte, Apple Pay ou cagnotte. Passe la souris (ou touche) pour retourner la carte.</p></div>
+          <div class="cc-wrap">
+            <div class="cc">
+              <div class="cc-face cc-front">
+                <div class="cc-row"><svg viewBox="0 0 100 100" width="26" height="26"><rect width="100" height="100" rx="28" fill="#fff"/><path d="M50 24 L78 48 Q80 50 77 52 L72 52 L72 74 Q72 77 69 77 L58 77 L58 61 L42 61 L42 77 L31 77 Q28 77 28 74 L28 52 L23 52 Q20 50 22 48 Z" fill="#0A0A0A"/></svg><span class="cc-chip"></span></div>
+                <div class="cc-num">4242 •••• •••• 4242</div>
+                <div class="cc-row cc-small"><span>ALEXANDRE D.</span><span>12/28</span></div>
+              </div>
+              <div class="cc-face cc-back"><div class="cc-strip"></div><div class="cc-cvc"><span>CVC</span><b>•••</b></div></div>
+            </div>
+          </div>
+        </article>
+        <article class="tile tile-qr tilt">
+          <div class="tile-copy"><h3>Ton pass, prêt</h3><p>Un QR unique par réservation.</p></div>
+          <div class="qr-box"><div id="qrTile"></div><span class="qr-code">#SS-6117</span></div>
+        </article>
+        <article class="tile tile-notif tilt">
+          <div class="tile-copy"><h3>Alertes calmes</h3><p>Seulement ce qui compte.</p></div>
+          <div class="notif-stack" id="notifStack"></div>
+        </article>
+        <article class="tile tile-fav tilt">
+          <div class="tile-copy"><h3>Favoris</h3><p>Garde tes lieux sous la main.</p></div>
+          <button class="fav-btn" id="favBtn" aria-pressed="false" aria-label="Ajouter aux favoris">
+            <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21Z"/></svg>
+          </button>
+          <span class="fav-count"><b id="favCount">6</b> lieux enregistrés</span>
+        </article>
+        <article class="tile tile-stats tilt">
+          <div class="tile-copy"><h3>Ta semaine de focus</h3><p>10h40 de travail profond. Série de 7 jours.</p></div>
+          <div class="week" id="week"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FOCUS DEMO -->
+    <section class="focus" id="focus">
+      <div class="container focus-inner">
+        <div class="focus-copy">
+          <span class="overline light">Mode Focus</span>
+          <h2>Une fois assis,<br/><em>respire.</em></h2>
+          <p class="lead light">Un minuteur Pomodoro qui respire avec toi. 25, 50 ou 90 minutes, une ambiance sonore, et ton temps de focus s'ajoute à tes stats.</p>
+          <div class="presets" role="radiogroup" aria-label="Durée de la session">
+            <button class="preset is-active" data-min="25" role="radio" aria-checked="true">25 min</button>
+            <button class="preset" data-min="50" role="radio" aria-checked="false">50 min</button>
+            <button class="preset" data-min="90" role="radio" aria-checked="false">90 min</button>
+          </div>
+          <p class="focus-note">Démo accélérée ×60 : une minute passe en une seconde.</p>
+        </div>
+        <div class="focus-dial">
+          <div class="orb orb-1"></div><div class="orb orb-2"></div>
+          <svg class="ring" viewBox="0 0 300 300" aria-hidden="true">
+            <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3DDC84"/><stop offset="1" stop-color="#1F9D55"/></linearGradient></defs>
+            <circle cx="150" cy="150" r="130" class="ring-bg"/>
+            <circle cx="150" cy="150" r="130" class="ring-fg" id="ringFg"/>
+          </svg>
+          <div class="dial-center">
+            <div class="dial-time" id="dialTime" aria-live="polite">25:00</div>
+            <div class="dial-sub" id="dialSub">Prêt·e à te concentrer ?</div>
+          </div>
+          <div class="dial-controls">
+            <button class="ctrl" id="focusReset" aria-label="Réinitialiser">↺</button>
+            <button class="ctrl ctrl-main" id="focusPlay" aria-label="Démarrer"><span class="ico-play"></span></button>
+            <button class="ctrl" id="focusSkip" aria-label="Terminer la session">⇥</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUMBERS -->
+    <section class="numbers container">
+      <div class="num"><b data-count="11">0</b><span>lieux partenaires à Paris</span></div>
+      <div class="num"><b data-count="24" data-suffix=" dB">0</b><span>le lieu le plus calme</span></div>
+      <div class="num"><b data-count="3">0</b><span>gestes pour réserver</span></div>
+      <div class="num"><b data-count="0" data-suffix=" €">0</b><span>pour les bibliothèques publiques</span></div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq container" id="faq">
+      <header class="section-head">
+        <span class="overline">Questions</span>
+        <h2>Tout ce que tu <em>te demandes.</em></h2>
+      </header>
+      <div class="faq-list">
+        <details><summary>StudySpot est-il gratuit ?<i></i></summary><div><p>L'app est gratuite. Les bibliothèques publiques restent gratuites ; les cafés et coworkings partenaires sont facturés à l'heure (de 3 à 6 €), affiché avant de réserver.</p></div></details>
+        <details><summary>Comment est mesuré le niveau sonore ?<i></i></summary><div><p>Chaque lieu partenaire partage un niveau sonore moyen, actualisé en continu. Tu vois en un coup d'œil s'il fait 27 dB comme sous les voûtes de Sainte-Geneviève, ou 50 dB comme dans un café animé.</p></div></details>
+        <details><summary>Et si le créneau que je veux est complet ?<i></i></summary><div><p>StudySpot te propose immédiatement les créneaux libres les plus proches de l'heure choisie, ou un lieu similaire à proximité.</p></div></details>
+        <details><summary>Je peux annuler une réservation ?<i></i></summary><div><p>Oui, depuis « Mes réservations ». Ta place est aussitôt libérée pour quelqu'un d'autre.</p></div></details>
+        <details><summary>L'app sera-t-elle disponible sur Android ?<i></i></summary><div><p>StudySpot arrive d'abord sur iPhone. Android suivra : inscris-toi plus bas pour être prévenu·e.</p></div></details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="download">
+      <div class="cta-card container">
+        <div class="cta-logo" id="ctaLogo" aria-hidden="true">
+          <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="28" fill="#fff"/><path d="M50 24 L78 48 Q80 50 77 52 L72 52 L72 74 Q72 77 69 77 L58 77 L58 61 L42 61 L42 77 L31 77 Q28 77 28 74 L28 52 L23 52 Q20 50 22 48 Z" fill="#0A0A0A"/></svg>
+        </div>
+        <h2>Le silence,<br/><em>à portée de main.</em></h2>
+        <p class="lead light">StudySpot arrive bientôt sur l'App Store. Laisse ton e‑mail, on te prévient le jour du lancement.</p>
+        <form class="waitlist" id="waitlist" novalidate>
+          <label class="sr-only" for="email">Adresse e-mail</label>
+          <input id="email" type="email" placeholder="ton@email.com" autocomplete="email" required />
+          <button class="btn btn-white magnetic" type="submit">Me prévenir</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="#top" class="brand light"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><rect width="100" height="100" rx="28" fill="#fff"/><path d="M50 24 L78 48 Q80 50 77 52 L72 52 L72 74 Q72 77 69 77 L58 77 L58 61 L42 61 L42 77 L31 77 Q28 77 28 74 L28 52 L23 52 Q20 50 22 48 Z" fill="#0A0A0A"/></svg><span>StudySpot</span></a>
+      <p>Fait à Paris, pour celles et ceux qui ont besoin de calme.</p>
+      <p class="muted">© 2026 StudySpot</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
